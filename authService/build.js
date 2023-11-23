@@ -8,7 +8,7 @@ const buildProject = async () => {
             platform: "node",
             bundle: true,
             entryPoints: ["src/index.ts"],
-            outdir: "dist",
+            outdir: "build",
         });
     } catch (error) {
         console.error("Build Failed:", error);

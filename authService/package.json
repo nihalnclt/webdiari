@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "build": "node build.js",
-        "start": "npm run build && node dist/index.js",
+        "start": "npm run build && node build/index.js",
         "dev": "ts-node-dev --poll src/index.ts",
         "test": "jest"
     },

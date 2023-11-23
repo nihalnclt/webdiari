@@ -1,0 +1,24 @@
+{
+    "name": "@webdiari/common",
+    "version": "0.0.3",
+    "description": "",
+    "main": "./build/index.js",
+    "types": "./build/index.d.ts",
+    "files": [
+        "build/**/*"
+    ],
+    "scripts": {
+        "clean": "del ./build/*",
+        "build": "npm run clean && tsc",
+        "pub": "npm version patch && npm run build && npm publish"
+    },
+    "keywords": [
+        "webdiari"
+    ],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "del-cli": "^5.1.0",
+        "typescript": "^5.3.2"
+    }
+}
