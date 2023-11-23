@@ -1,7 +1,5 @@
-import { User } from "../models";
-
 const userDbRepositoryImpl = () => {
-    const findById = (id: string) => User.findById(id).select("-password");
+    const findById = (id: string) => {};
 
     return { findById };
 };

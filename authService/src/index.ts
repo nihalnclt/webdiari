@@ -1,26 +1,34 @@
-import express, { Application } from "express";
+import express, { Application, Request, Response } from "express";
+import "express-async-errors";
+import { NotFoundError, errorHandler, DatabaseConnError } from "@webdiari/common";
+
 import expressConfig from "./frameworks/web/express";
-import Server from "./frameworks/web/server";
+import server from "./frameworks/web/server";
 import router from "./frameworks/web/routes";
-// import database from "./frameWorks/database/mongodb/connection/connection";
-// import ErrorHandlingMidleware from "./frameWorks/webServer/middlewares/errorMiddleware";
-// import AppError from "./utils/appErrors";
+import MongoDb from "./frameworks/database/mongodb/connection/connection";
+import mongoose from "mongoose";
 
 const app: Application = express();
 
-// EXPRESS CONFIG
-expressConfig(app);
-// CREAT SERVER
-Server(app);
-// Database Connection
-// database();
-// // Routes
-router(app);
+const start = async () => {
+    // connecting mongodb database
+    const mongo = new MongoDb(mongoose, { reconnectInterval: 5000 });
+    await mongo.connect().catch((err) => {
+        throw new DatabaseConnError();
+    });
 
-// app.use(ErrorHandlingMidleware);
+    expressConfig(app);
+    router(app);
 
-// app.all("*", (req, res, next) => {
-//     next(new AppError("Not found", 404));
-// });
+    app.all("*", (req: Request, res: Response) => {
+        throw new NotFoundError();
+    });
+    app.use(errorHandler);
 
-export default app;
+    // starting server
+    server(app).start();
+};
+
+start();
+
+export { app };

@@ -2,15 +2,14 @@ import { CustomError } from "./customError";
 
 export class NotFoundError extends CustomError {
     statusCode = 404;
-    reason = "Error connecting to database";
 
     constructor() {
-        super("Error connecting to db");
+        super("Route not found");
 
         Object.setPrototypeOf(this, NotFoundError.prototype);
     }
 
     serializeErrors() {
-        return [{ message: this.reason }];
+        return [{ message: "Route not found" }];
     }
 }

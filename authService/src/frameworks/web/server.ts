@@ -1,10 +1,17 @@
-import express, { Application } from "express";
-const app: Application = express();
+import { Application } from "express";
 
-const Server = (app: Application) => {
-    const PORT = 5000;
-    app.listen(PORT, () => {
-        console.log("Server PORT:5000 Created");
-    });
+import envConfig from "../../config/config";
+
+const PORT = envConfig.port || 5000;
+
+const server = (app: Application) => {
+    const start = () => {
+        app.listen(PORT, () => {
+            console.log(`Server is up and running on ${PORT}`);
+        });
+    };
+
+    return { start };
 };
-export default Server;
+
+export default server;

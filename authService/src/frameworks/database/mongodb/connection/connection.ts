@@ -1,39 +1,38 @@
-export default function connection(mongoose, config, options) {
-    function connectToMongo() {
-        mongoose
-            .connect(config.mongo.uri, options)
-            .then(
-                () => {},
-                (err) => {
-                    console.info("Mongodb error", err);
-                }
-            )
-            .catch((err) => {
-                console.log("ERROR:", err);
-            });
+import { Mongoose } from "mongoose";
+
+import envConfig from "../../../../config/config";
+import { MongoDbOptions } from "../../../../core/types/types";
+
+export default class MongoDb {
+    public mongoose: Mongoose;
+    public options: MongoDbOptions;
+
+    constructor(mongoose: Mongoose, options: MongoDbOptions) {
+        this.mongoose = mongoose;
+        this.options = options;
+
+        this.mongoose.connection.on("connected", () => {
+            console.info("MongoDb database connection successfully established");
+        });
+
+        this.mongoose.connection.on("reconnected", () => {
+            console.info("MongoDb database reconnected!");
+        });
+
+        this.mongoose.connection.on("error", (error: any) => {
+            console.error(`Error in MongoDb connection: ${error}`);
+            mongoose.disconnect();
+        });
+
+        this.mongoose.connection.on("disconnected", () => {
+            console.error(
+                `MongoDB disconnected! Reconnecting in ${options.reconnectInterval / 1000}s...`
+            );
+            setTimeout(() => this.connect(), options.reconnectInterval);
+        });
     }
 
-    mongoose.connection.on("connected", () => {
-        console.info("Connected to MongoDB!");
-    });
-
-    mongoose.connection.on("reconnected", () => {
-        console.info("MongoDB reconnected!");
-    });
-
-    mongoose.connection.on("error", (error) => {
-        console.error(`Error in MongoDb connection: ${error}`);
-        mongoose.disconnect();
-    });
-
-    mongoose.connection.on("disconnected", () => {
-        console.error(
-            `MongoDB disconnected! Reconnecting in ${options.reconnectInterval / 1000}s...`
-        );
-        setTimeout(() => connectToMongo(), options.reconnectInterval);
-    });
-
-    return {
-        connectToMongo,
-    };
+    connect() {
+        return this.mongoose.connect(envConfig.mongodbUrl);
+    }
 }

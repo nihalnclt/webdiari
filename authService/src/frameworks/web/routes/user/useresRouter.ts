@@ -2,7 +2,7 @@ import express from "express";
 
 import userAuthController from "../../../../adapters/controllers/userAuthController";
 import userDbRepositoryImpl from "../../../database/mongodb/repositories/userDbRepositoryImpl";
-import { authServiceInterface } from "../../../../application/services/authServiceInterface";
+import authServiceInterface from "../../../../application/services/authServiceInterface";
 import authServiceImpl from "../../../services/authServiceImpl";
 import userRepository from "../../../../application/repositories/userRepository";
 

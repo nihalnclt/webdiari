@@ -1,6 +1,6 @@
 import { authServiceImplType } from "../../frameworks/services/authServiceImpl";
 
-export const authServiceInterface = (service: ReturnType<authServiceImplType>) => {
+const authServiceInterface = (service: ReturnType<authServiceImplType>) => {
     const encriptPassword = (password: string) => {
         // return service.encrypt(password);
         return;
@@ -45,3 +45,4 @@ export const authServiceInterface = (service: ReturnType<authServiceImplType>) =
 };
 
 export type authServiceInterfaceType = typeof authServiceInterface;
+export default authServiceInterface;

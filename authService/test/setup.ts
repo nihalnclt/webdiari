@@ -1,36 +1,33 @@
-
+import mongoose from "mongoose";
+import { MongoMemoryServer } from "mongodb-memory-server";
 
 // declare global {
 //     var signin: () => string[];
 // }
 
-
 let mongo: any;
-// beforeAll(async () => {
-//     process.env.JWT_KEY = "asdfasdf";
-//     process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+beforeAll(async () => {
+    mongo = await MongoMemoryServer.create();
+    const mongoUri = mongo.getUri();
 
-//     mongo = await MongoMemoryServer.create();
-//     const mongoUri = mongo.getUri();
+    await mongoose.connect(mongoUri, {});
+});
 
-//     await mongoose.connect(mongoUri, {});
-// });
+beforeEach(async () => {
+    jest.clearAllMocks();
+    const collections = await mongoose.connection.db.collections();
 
-// beforeEach(async () => {
-//     jest.clearAllMocks();
-//     const collections = await mongoose.connection.db.collections();
+    for (let collection of collections) {
+        await collection.deleteMany({});
+    }
+});
 
-//     for (let collection of collections) {
-//         await collection.deleteMany({});
-//     }
-// });
-
-// afterAll(async () => {
-//     if (mongo) {
-//         await mongo.stop();
-//     }
-//     await mongoose.connection.close();
-// });
+afterAll(async () => {
+    if (mongo) {
+        await mongo.stop();
+    }
+    await mongoose.connection.close();
+});
 
 // global.signin = () => {
 //     // Build a JWT payload.  { id, email }
