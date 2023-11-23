@@ -1,12 +1,13 @@
 import express, { Application, Request, Response } from "express";
 import "express-async-errors";
 import { NotFoundError, errorHandler, DatabaseConnError } from "@webdiari/common";
+import mongoose from "mongoose";
 
 import expressConfig from "./frameworks/web/express";
 import server from "./frameworks/web/server";
 import router from "./frameworks/web/routes";
 import MongoDb from "./frameworks/database/mongodb/connection/connection";
-import mongoose from "mongoose";
+import envConfig from "./config/config";
 
 const app: Application = express();
 

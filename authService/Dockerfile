@@ -1,8 +1,11 @@
 FROM node:alpine
 
 WORKDIR /app
-COPY package.json .
-RUN npm install --omit=dev
+
+RUN npm install -g pnpm
+
+COPY .npmrc package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile --prod
 COPY . .
 
 CMD ["npm", "start"]

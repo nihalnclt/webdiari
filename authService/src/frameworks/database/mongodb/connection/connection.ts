@@ -33,6 +33,7 @@ export default class MongoDb {
     }
 
     connect() {
+        console.log("MONGODB URL", envConfig.mongodbUrl);
         return this.mongoose.connect(envConfig.mongodbUrl);
     }
 }
