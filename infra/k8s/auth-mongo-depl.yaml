@@ -24,7 +24,7 @@ spec:
   selector:
     app: auth-mongo
   ports:
-    - name: db
+    - name: dbs
       protocol: TCP
       port: 27017
       targetPort: 27017
