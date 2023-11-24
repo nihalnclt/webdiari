@@ -19,4 +19,4 @@ jobs:
           run_install: |
             - args: [--frozen-lockfile, --strict-peer-dependencies]
             - args: [--global, typescript]
-      - run: cd authService && npm install && npm run test:ci
+      - run: cd authService && npm install && npm run test
