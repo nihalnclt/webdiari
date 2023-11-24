@@ -1,0 +1,23 @@
+name: tests-auth
+
+on:
+  pull_request:
+    paths:
+      - 'authService/**'
+
+jobs:
+  build:
+    runs_on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 6.0.2
+          run_install: |
+            - recursive: true
+              args: [--frozen-lockfile, --strict-peer-dependencies]
+            - args: [--global, typescript]
+      - run: cd authService && pnpm install && pnpm run test
