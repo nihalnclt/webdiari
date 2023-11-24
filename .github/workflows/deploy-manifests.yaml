@@ -3,9 +3,9 @@ name: deploy-manifests
 on:
   push:
     branches:
-      - "main"
+      - main
     paths:
-      - "infra/**"
+      - 'infra/**'
 
 jobs:
   build:
