@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: auth
-          image: nihaln01/webdiari-auth
+          image: nihalnclt/webdiari-auth
           env:
             - name: MONGODB_URL
               value: "mongodb://auth-mongo-srv:27017/webdiari-auth"
