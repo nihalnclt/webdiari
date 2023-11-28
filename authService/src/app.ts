@@ -9,6 +9,7 @@ const app: Application = express();
 
 expressConfig(app);
 router(app);
+// Tet comment
 
 app.all("*", (req: Request, res: Response) => {
     throw new NotFoundError();
