@@ -7,7 +7,6 @@ import router from "./frameworks/web/routes";
 
 const app: Application = express();
 
-
 expressConfig(app);
 router(app);
 
