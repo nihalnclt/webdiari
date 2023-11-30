@@ -2,8 +2,10 @@ FROM node:alpine
 
 WORKDIR /app
 
-COPY package.json package-lock.json ./
-RUN npm install
+RUN npm install -g pnpm
+
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
 COPY . .
 
-CMD ["npm", "run", "prod-start"]
+CMD ["pnpm", "run", "prod-start"]
